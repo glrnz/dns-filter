@@ -1,0 +1,18 @@
+{
+  "name": "withcenter-dns",
+  "version": "1.0.0",
+  "description": "Withcenter DNS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "JaeHo Song",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.1.2",
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "forever": "^0.15.2",
+    "native-dns": "^0.7.0"
+  }
+}
