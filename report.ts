@@ -1,10 +1,15 @@
 'use strict'
 declare function require( name:string );
 let fs = require( 'fs' );
+/*
+class to parse data from log file.
+Will only work with log files with format of
 
-class domainAnalytic{
+ip domain
+
+*/
+class ParseLog{
 contents:String;
-
     constructor(dnsLog:string){
         this.contents = dnsLog;
     }
@@ -16,9 +21,7 @@ contents:String;
             domain.push( data[ 1 ] );
          });
          return domain;
-       
     }
-
     getIp(){
         let ip = [];
         let raw = this.contents.split('\n');
@@ -26,22 +29,17 @@ contents:String;
             let data = curretValue.split( ' ' );
             ip.push( data[ 0 ] );
          });
-         return ip;
-       
+         return ip; 
     }
-}
+} // end of class domainAnalytic
 
-let contents:string = fs.readFileSync( 'data_log.txt' ).toString();
-
-let data = new domainAnalytic( contents );
-
-//console.log(data.getIp());
-
-
+let contents:string = fs.readFileSync( 'log/data_log.txt' ).toString();
+let whitelist:string = fs.readFileSync( 'whitelist.conf' ).toString();
+let whitelist2 = whitelist.split("\r\n");
+let data = new ParseLog( contents );
 //-------------------- Group each identical data ---------------------------//
+////parse unique requested domains and get number of request for each.
 function requestedDomain( data ){
-    /*
-    */
     let groupDomain = [];
     let arr = data;
     let domain:string;
@@ -50,25 +48,45 @@ function requestedDomain( data ){
     let newArr = arr.filter( ( item, index, inputArray ) => {
            return inputArray.indexOf(item) == index;
     });
-    for( i=0; i <= newArr.length - 1; i++  ){
-            domain = newArr[i];
-            count = arr.indexOf( domain ) + 1;
-            groupDomain.push( { domain, count } );
-        }
-    return groupDomain;
+   
+   newArr.forEach( ( item, index ) => {
+    let domain = item;
+    let find = arr.filter( ( eqToArr ) => {
+       return eqToArr == item;
+    });
+    let no_of_req = find.length;
+     groupDomain.push( { no_of_req, domain } );
+   }); 
+   return groupDomain;
 }
+let domain = data.getDomain();
+requestedDomain( domain );
+   
+
 //sort from Top requested to least
 function topDomain(){
     let domain = data.getDomain();
     let reqDomain= [];
     reqDomain = requestedDomain( domain );
     reqDomain.sort( function( a,b ){
-        return b.count - a.count;
+        return b.no_of_req - a.no_of_req;
     } );
     return reqDomain;
-//console.log( reqDomain );
 }
-console.log(topDomain());
+let comment = /^#/;
+let list = [];
+function white() {
+    whitelist2.forEach( ( val,index ) => {
+        if ( val.match( comment )){
+          list.splice( index );
+        }else{
+          list.push( val );
+        }
+    });
+console.log(list);
+//comment on whitelist.conf
+}
 
+white();
 //requestedDomain() are only names
-//topDomain() are names with number of request.
+//topDomain() domains sorted from top requested to least
