@@ -15,6 +15,20 @@ Caching DNS with filtering
 # Create a service  
   Make sure you are in your working directory  
   -sudo forever-service install dnsfilter --script dns-server.js
+  
+  output:
+                      forever-service version 0.5.9
+
+              Platform - CentOS Linux release 7.1.1503 (Core)
+
+              dnsfilter provisioned successfully
+
+              Commands to interact with service dnsfilter
+              Start   - "sudo service dnsfilter start"
+              Stop    - "sudo service dnsfilter stop"
+              Status  - "sudo service dnsfilter status"
+              Restart - "sudo service dnsfilter restart"
+
 
 
 # You might run into problem regarding root priviledges.  
