@@ -2,9 +2,9 @@
 Caching DNS with filtering
 
 # Pre-requisite software
-  -nodejs
+  -nodejs<\br>
   -npm
 
 # Installation
-  -npm install
+  -npm install<\br>
   -node dns-server.js
