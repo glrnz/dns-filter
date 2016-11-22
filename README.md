@@ -3,7 +3,10 @@ Caching DNS with filtering
 
 # Pre-requisite software
   -nodejs<br>
-  -npm  
+  -npm
+# Packages outside package.json
+  -forever  
+  -forever-service
 
 # Installation
   -npm install<br>
