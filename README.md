@@ -10,4 +10,7 @@ Caching DNS with filtering
 
 # Installation
   -npm install<br>
-  -node dns-server.js
+  -npm install -g forever forever-service  
+
+# Create a service
+  -sudo forever-service install test --script main.js
