@@ -12,8 +12,9 @@ Caching DNS with filtering
   -npm install<br>
   -npm install -g forever forever-service  
 
-# Create a service
-  -sudo forever-service install test --script main.js
+# Create a service  
+  Make sure you are in your working directory
+  -sudo forever-service install dnsfilter --script dns-server.js
 
 
 # You might run into problem regarding root priviledges.  
