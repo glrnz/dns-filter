@@ -12,7 +12,6 @@
     "async": "^2.1.2",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
-    "forever": "^0.15.2",
     "native-dns": "^0.7.0"
   }
 }
