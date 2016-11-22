@@ -1,5 +1,4 @@
 'use strict';
-
 /**
  * Configuration
  */
@@ -16,27 +15,25 @@ let comment = /^#/;
 let whitelist = [];
 //populate whitelist array and remove comments
     list.forEach( ( val,index ) => {
-        if ( val.match( comment ) || val == ""){
+        if ( val.match( comment ) || val == "" ){
           whitelist.splice( index );
         }else{
           whitelist.push( val );
         }
     });
 // ------------------------ Do not edit below -------------------------------
-
 let dns = require('native-dns');
 let server = dns.createServer();
-let month = ['Jan','Feb','March','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+let month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
 function getDate(){
   let now = new Date();
   let date = ' '+ now.getHours() + ':' + now.getMinutes() + ' ' + month[ now.getMonth() ] +'-'+ now.getDate() +'-'+now.getFullYear();
 return date;
 }
-
 let server_address;
 //Event Logging
   server.on('listening', () =>{
-      fs.appendFile('log/event.log', '\nServer started... ' + server.address().address + getDate() );
+    fs.appendFile('log/event.log', '\nServer started... ' + server.address().address + getDate() );
     console.log('Listening on... '+server.address().address + getDate());
   });
   server.on('close', () => 
@@ -54,13 +51,11 @@ server.serve(53);
 
 function proxy( question, response, cb ) {
   //console.log('proxying', question.name);
-
   var request = dns.Request({
     question: question, // Forward the query
     server: authority,  // Parent DNS server to get IP address of the request
-    timeout: 1000
+    timeout: 3000
   });
-
   // when we get answers, append them to the response
   // When gets answers from Parent DNS, append it to response.
   request.on('message', (err, msg) => {
@@ -70,9 +65,7 @@ function proxy( question, response, cb ) {
   request.on('end', cb);
   request.send();
 }
-
 let async = require('async');
-
 function handleRequest(request, response) {
   let f = []; // Array of functions
   // Proxy all questions
@@ -83,27 +76,27 @@ function handleRequest(request, response) {
   request.question.forEach(question => {
       // Domains that you want allow.
       //let entry = whitelist.filter( r => new RegExp(r, 'i').exec(question.name));
-   let entry = whitelist.filter( ( currentValue, index, arr ) => {
-        if ( question.name.indexOf( currentValue ) != -1 ) return currentValue;
-      });
-      // When a domain matches in whitelist, response with real IP address.
-      if (entry.length) {
-      // console.log('PASS: request from: ', request.address.address, ' for: ', question.name);
-          fs.appendFile('log/passed.txt','\n'+ getDate() +' PASS: request from: ' + request.address.address + ' for: ' + question.name);
-          fs.appendFile('log/data_log.txt','\n'+request.address.address + ' ' + question.name);
-            f.push(cb => proxy(question, response, cb));
-      }
-      else { // or block it.
-      //  console.log('BLOCK: request from: ', request.address.address, ' for: ', question.name);
-          fs.appendFile('log/blocked.txt','\n'+ getDate() +' BLOCK: request from: ' + request.address.address + ' for: ' + question.name);
-          fs.appendFile('log/data_log.txt', '\n'+request.address.address + ' ' + question.name);
-            let record = {};
-            record.name = question.name;
-            record.ttl = TTL_FOR_BLOCK;
-            record.address = IP_FOR_BLOCK;
-            record.type = 'A';
-            response.answer.push(dns['A'](record));
-    }
+        let entry = whitelist.filter( ( currentValue, index, arr ) => {
+                if ( question.name.indexOf( currentValue ) != -1 ) return currentValue;
+            });
+          // When a domain matches in whitelist, response with real IP address.
+        if (entry.length) {
+          // console.log('PASS: request from: ', request.address.address, ' for: ', question.name);
+             // fs.appendFile('log/passed.txt','\n'+ getDate() +' PASS: request from: ' + request.address.address + ' for: ' + question.name);
+             // fs.appendFile('log/data_log.txt','\n'+request.address.address + ' ' + question.name);
+              f.push(cb => proxy(question, response, cb));
+        }
+        else { // or block it.
+          //  console.log('BLOCK: request from: ', request.address.address, ' for: ', question.name);
+             // fs.appendFile('log/blocked.txt','\n'+ getDate() +' BLOCK: request from: ' + request.address.address + ' for: ' + question.name);
+             // fs.appendFile('log/data_log.txt', '\n'+request.address.address + ' ' + question.name);
+                let record = {};
+                record.name = question.name;
+                record.ttl = TTL_FOR_BLOCK;
+                record.address = IP_FOR_BLOCK;
+                record.type = 'A';
+                response.answer.push(dns['A'](record));
+        }
   });
   // Do the proxying in parallel
   // when done, respond to the request by sending the response
