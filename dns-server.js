@@ -106,3 +106,5 @@ function handleRequest(request, response) {
   async.parallel(f, function() { response.send()  ; });
 }
 server.on('request', handleRequest);
+
+list = 0;
