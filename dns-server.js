@@ -21,6 +21,7 @@ let whitelist = [];
           whitelist.push( val );
         }
     });
+list = null; //unpopulate list, We already gave the datas to whitelist
 // ------------------------ Do not edit below -------------------------------
 let dns = require('native-dns');
 let server = dns.createServer();
@@ -106,5 +107,3 @@ function handleRequest(request, response) {
   async.parallel(f, function() { response.send()  ; });
 }
 server.on('request', handleRequest);
-
-list = null;
