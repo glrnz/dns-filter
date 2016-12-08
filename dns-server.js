@@ -107,4 +107,4 @@ function handleRequest(request, response) {
 }
 server.on('request', handleRequest);
 
-list = 0;
+list = null;
