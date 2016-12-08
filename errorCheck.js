@@ -13,10 +13,9 @@ if (err) {
 }
 else{
 exec('forever start dns-server.js', (error, stdout, stderr) => {
-  if (error) {
-    console.error(`exec error: ${error}`);
-    return;
-  }
-});
-
+          if (error) {
+            console.error(`exec error: ${error}`);
+            return;
+          }
+    });
 }
