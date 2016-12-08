@@ -37,7 +37,7 @@ Caching DNS with filtering
 
 
 # You might run into problem regarding root priviledges.  
-# Create symlinks to work with sudo priviledges.
+   Create symlinks to work with sudo priviledges.
   You can use sudoers account but make sure npm and node have symbolic links.
  
             sudo ln -s /usr/local/bin/node /usr/bin/node  
