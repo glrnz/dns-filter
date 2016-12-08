@@ -14,7 +14,12 @@ Caching DNS with filtering
 
 # Create a service  
   Make sure you are in your working directory  
-  -sudo forever-service install dnsfilter --script dns-server.js
+  
+         sudo forever-service install dnsfilter --script dns-server.js
+         
+ Or with error checking (not tested on linux).
+ 
+        sudo forever-service install dnsfilter --script errorCheck.js
   
   output:
                       forever-service version 0.5.9
