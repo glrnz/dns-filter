@@ -10,7 +10,6 @@ var err = check(src, file);
 if (err) {
     console.error('ERROR DETECTED!!');
     console.error(err);
-    console.error(Array(76).join('-'));
 }
 else{
 exec('forever start dns-server.js', (error, stdout, stderr) => {
@@ -18,8 +17,6 @@ exec('forever start dns-server.js', (error, stdout, stderr) => {
     console.error(`exec error: ${error}`);
     return;
   }
-  console.log(`stdout: ${stdout}`);
-  console.log(`stderr: ${stderr}`);
 });
 
 }
