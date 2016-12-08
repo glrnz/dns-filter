@@ -16,7 +16,7 @@ let whitelist = [];
 //populate whitelist array and remove comments
     list.forEach( ( val,index ) => {
         if ( val.match( comment ) || val == "" ){
-          whitelist.splice( index );
+
         }else{
           whitelist.push( val );
         }
