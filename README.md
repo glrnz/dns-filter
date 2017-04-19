@@ -1,4 +1,4 @@
-# dn_server
+# DNS Filtering
 Caching DNS with filtering
 
 # Pre-requisite software
@@ -47,7 +47,7 @@ Caching DNS with filtering
             sudo ln -s /usr/local/n/versions/node/6.2.0/bin/forever-service /usr/bin/forever-service
             sudo ln -s /usr/local/n/versions/node/6.2.0/bin/forever /usr/bin/forever
 
-#TO DO :)
+# TO DO :)
 - Add Main Program Configuration. (To set Blacklist or Whitelist mode)
 - Reporting (to keep track of your network for management ease)
 - Web GUI O.O
