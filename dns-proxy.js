@@ -56,38 +56,12 @@ function handleRequest(request, response) {
   let f = []; // Array of functions
 
   // Proxy all questions
-  // Since proxying is asynchronous, store all callbacks
-//Use for Whitelisting
+  // Since proxying is asynchronous, store all callback
   request.question.forEach(question => {
-      // Domains that you want allow.
-      //let entry = whitelist.filter( r => new RegExp(r, 'i').exec(question.name));
-  /*    let entry = whitelist.filter( ( currentValue, index, arr ) => {
-        if ( question.name.indexOf( currentValue ) != -1 ) return currentValue;
-      });
-      // When a domain matches in whitelist, response with real IP address.
-      if (entry.length) {
-      // console.log('PASS: request from: ', request.address.address, ' for: ', question.name);
-     fs.appendFile('log/passed.txt', '\nPASS: request from: ' + request.address.address + ' for: ' + question.name);
-     fs.appendFile('log/data_log.txt', '\n'+request.address.address + ' ' + question.name);
-        f.push(cb => proxy(question, response, cb));
-      }
-      else { // or block it.
-      //  console.log('BLOCK: request from: ', request.address.address, ' for: ', question.name);
-        fs.appendFile('log/blocked.txt', '\nBLOCK: request from: ' + request.address.address + ' for: ' + question.name);
-        fs.appendFile('log/data_log.txt', '\n'+request.address.address + ' ' + question.name);
-          let record = {};
-          record.name = question.name;
-          record.ttl = TTL_FOR_BLOCK;
-          record.address = IP_FOR_BLOCK;
-          record.type = 'A';
-          response.answer.push(dns['A'](record));
-    }
+      fs.appendFile('log/passed.txt', '\nPASS: request from: ' + request.address.address + ' for: ' + question.name);
+           fs.appendFile('log/data_log.txt', '\n'+request.address.address + ' ' + question.name);
+              f.push(cb => proxy(question, response, cb));
   });
-*/
-fs.appendFile('log/passed.txt', '\nPASS: request from: ' + request.address.address + ' for: ' + question.name);
-     fs.appendFile('log/data_log.txt', '\n'+request.address.address + ' ' + question.name);
-        f.push(cb => proxy(question, response, cb));
-});
   // Do the proxying in parallel
   // when done, respond to the request by sending the response
   async.parallel(f, function() { response.send(); });
